@@ -14,7 +14,7 @@ class XkcdBot:
         discordHook = os.environ["XKCD_HOOK"]
 
         msg = src + "\r\n" + title
-        print(msg)
+        #print(msg)
 
         requests.post(discordHook, data={'content': msg} )
 

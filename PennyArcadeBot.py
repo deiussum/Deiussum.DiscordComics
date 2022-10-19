@@ -5,24 +5,37 @@ from pyquery import PyQuery as pq
 from dotenv import load_dotenv
 
 class XkcdBot:
+    def __init__(self):
+        self.url = 'https://www.penny-arcade.com/comic'
+        self.discordHook = os.environ['PENNY_HOOK']
+        self.appSettings = AppSettings.AppSettings()
+
     def postLatest(self):
-        result = requests.get("https://www.penny-arcade.com/comic")
-        # print(result.text)
+        current = self.getCurrent()
 
+        if self.isNewComic(current):
+            self.postToDiscord(current)
+
+    def postToDiscord(self, current):
+        msg = f"{current['title']}\r\n{current['img']}"
+
+        requests.post(self.discordHook, data={'content': msg} )
+
+        self.appSettings.setAppSetting('LAST_PENNY', current['img'])
+
+    def getCurrent(self):
+        result = requests.get(self.url)
         html = pq(result.text)
-        title = html("meta[property='og:title']").attr["content"]
-        img = html("meta[property='og:image']").attr["content"]
 
-        discordHook = os.environ["PENNY_HOOK"]
+        return {
+            'title': html("meta[property='og:title']").attr['content'],
+            'img': html("meta[property='og:image']").attr['content']
+        }
 
-        msg = title + "\r\n" + img
-        # print(msg)
+    def isNewComic(self, current):
+        lastComic = self.appSettings.getAppSetting('LAST_PENNY')
+        return lastComic != current['img']
 
-        appSettings = AppSettings.AppSettings()
-        lastComic = appSettings.GetAppSetting('LAST_PENNY')
-        if lastComic != img:
-            requests.post(discordHook, data={'content': msg} )
-            appSettings.SetAppSetting('LAST_PENNY', img)
 
 if __name__ == '__main__':
     load_dotenv()

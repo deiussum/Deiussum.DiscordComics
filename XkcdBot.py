@@ -5,25 +5,42 @@ from pyquery import PyQuery as pq
 from dotenv import load_dotenv
 
 class XkcdBot:
+    def __init__(self):
+        self.url = 'https://xkcd.com'
+        self.appSettings = AppSettings.AppSettings()
+        self.discordHook = os.environ['XKCD_HOOK']
+
     def postLatest(self):
-        result = requests.get("https://xkcd.com")
+        current = self.getCurrent()
 
+        if self.isNewComic(current):
+            self.postToDiscord(current)
+
+
+    def postToDiscord(self, current):
+        msg = f"{current['title']}\r\n{current['img']}"
+
+        requests.post(self.discordHook, data={'content': msg} )
+        requests.post(self.discordHook, data={'content': current['altText']} )
+
+        self.appSettings.setAppSetting('LAST_XKCD', current['img'])
+
+    
+    def getCurrent(self):
+        result = requests.get(self.url)
         html = pq(result.text)
-        title = html("#ctitle").html()
-        src = "https:" + html("#comic img").attr["src"]
-        altText = "Alt text: " + html("#comic img").attr["title"]
 
-        discordHook = os.environ["XKCD_HOOK"]
+        return {
+            'title':  html('#ctitle').html(),
+            'img':  f"https:{html('#comic img').attr['src']}",
+            'altText': f"Alt text: {html('#comic img').attr['title']}"
+        }
 
-        msg = title + "\r\n" + src
-        #print(msg)
-        appSettings = AppSettings.AppSettings()
-        lastComic = appSettings.GetAppSetting('LAST_XKCD')
+    def isNewComic(self, current):
+        lastComic = self.appSettings.getAppSetting('LAST_XKCD')
+        return lastComic != current['img']
 
-        if lastComic != src:
-            requests.post(discordHook, data={'content': msg} )
-            requests.post(discordHook, data={'content': altText} )
-            appSettings.SetAppSetting('LAST_XKCD', src)
+
 
 if __name__ == '__main__':
     load_dotenv()

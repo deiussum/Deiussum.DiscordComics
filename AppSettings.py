@@ -1,22 +1,22 @@
 import os
 
 class AppSettings:
-    def GetAppSetting(self, key):
-        settings = self.ReadSettings()
+    def getAppSetting(self, key):
+        settings = self.readSettings()
 
         if key in settings:
             return settings[key]
 
         return ''
 
-    def SetAppSetting(self, key, value):
-        settings = self.ReadSettings()
+    def setAppSetting(self, key, value):
+        settings = self.readSettings()
         settings[key] = value
-        self.WriteSettings(settings)
+        self.writeSettings(settings)
 
-    def ReadSettings(self):
+    def readSettings(self):
         settings = {}
-        fileName = self.GetSettingsFilename()
+        fileName = self.getSettingsFilename()
 
         if not os.path.exists(fileName):
             return settings
@@ -34,16 +34,16 @@ class AppSettings:
 
         return settings 
 
-    def WriteSettings(self, settings):
-        file=open(self.GetSettingsFilename(), "w")
+    def writeSettings(self, settings):
+        file=open(self.getSettingsFilename(), 'w')
         for key in settings:
             line = key + '=' + settings[key] + '\n'
             file.write(line)
         file.close()
 
-    def GetSettingsFilename(self):
+    def getSettingsFilename(self):
         path = os.path.dirname(__file__)
-        return os.path.join(path, "settings.txt")
+        return os.path.join(path, 'settings.txt')
 
 
 if __name__ == '__main__':

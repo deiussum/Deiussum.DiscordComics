@@ -13,10 +13,9 @@ class XkcdBot:
 
         discordHook = os.environ["XKCD_HOOK"]
 
-        msg = src + "\r\n" + title
         #print(msg)
-
-        requests.post(discordHook, data={'content': msg} )
+        requests.post(discordHook, data={'content': src} )
+        requests.post(discordHook, data={'content': title} )
 
 load_dotenv()
 x = XkcdBot()

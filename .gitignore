@@ -2,3 +2,7 @@
 .env
 
 .vscode/
+
+settings.txt
+
+__pycache__/

@@ -8,14 +8,16 @@ class XkcdBot:
         result = requests.get("https://xkcd.com")
 
         html = pq(result.text)
+        title = html("#ctitle").html()
         src = "https:" + html("#comic img").attr["src"]
-        title = "Alt text: " + html("#comic img").attr["title"]
+        altText = "Alt text: " + html("#comic img").attr["title"]
 
         discordHook = os.environ["XKCD_HOOK"]
 
+        msg = title + "\r\n" + src
         #print(msg)
-        requests.post(discordHook, data={'content': src} )
-        requests.post(discordHook, data={'content': title} )
+        requests.post(discordHook, data={'content': msg} )
+        requests.post(discordHook, data={'content': altText} )
 
 load_dotenv()
 x = XkcdBot()

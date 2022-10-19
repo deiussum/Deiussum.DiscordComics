@@ -1,4 +1,4 @@
-from os.path import exists
+import os
 
 class AppSettings:
     def GetAppSetting(self, key):
@@ -18,17 +18,17 @@ class AppSettings:
         settings = {}
         fileName = self.GetSettingsFilename()
 
-        if not exists(fileName):
+        if not os.path.exists(fileName):
             return settings
 
         file=open(fileName)
         for line in file:
-            print(line)
             split = line.split('=',1)
+            if len(split) < 2:
+                continue
+            
             key = split[0]
-            print(key)
-            value = split[1]
-            print(value)
+            value = split[1].strip()
             settings[key]=value
         file.close()
 
@@ -37,12 +37,13 @@ class AppSettings:
     def WriteSettings(self, settings):
         file=open(self.GetSettingsFilename(), "w")
         for key in settings:
-            line = key + '=' + settings[key] + '\r\n'
+            line = key + '=' + settings[key] + '\n'
             file.write(line)
         file.close()
 
     def GetSettingsFilename(self):
-        return "settings.txt"
+        path = os.path.dirname(__file__)
+        return os.path.join(path, "settings.txt")
 
 
 if __name__ == '__main__':

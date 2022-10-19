@@ -1,5 +1,6 @@
 import os
 import requests
+import AppSettings
 from pyquery import PyQuery as pq
 from dotenv import load_dotenv
 
@@ -17,7 +18,11 @@ class XkcdBot:
         msg = title + "\r\n" + img
         # print(msg)
 
-        requests.post(discordHook, data={'content': msg} )
+        appSettings = AppSettings.AppSettings()
+        lastComic = appSettings.GetAppSetting('LAST_PENNY')
+        if lastComic != img:
+            requests.post(discordHook, data={'content': msg} )
+            appSettings.SetAppSetting('LAST_PENNY', img)
 
 load_dotenv()
 x = XkcdBot()

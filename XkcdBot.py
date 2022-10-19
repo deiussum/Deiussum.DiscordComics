@@ -18,12 +18,11 @@ class XkcdBot:
 
 
     def postToDiscord(self, current):
-        msg = f"{current['title']}\r\n{current['img']}"
+        url = current['url']
 
-        requests.post(self.discordHook, data={'content': msg} )
-        requests.post(self.discordHook, data={'content': current['altText']} )
+        requests.post(self.discordHook, data={'content': url} )
 
-        self.appSettings.setAppSetting('LAST_XKCD', current['img'])
+        self.appSettings.setAppSetting('LAST_XKCD', url)
 
     
     def getCurrent(self):
@@ -33,7 +32,8 @@ class XkcdBot:
         return {
             'title':  html('#ctitle').html(),
             'img':  f"https:{html('#comic img').attr['src']}",
-            'altText': f"Alt text: {html('#comic img').attr['title']}"
+            'altText': f"Alt text: {html('#comic img').attr['title']}",
+            'url': html("meta[property='og:url']").attr['content'],
         }
 
     def isNewComic(self, current):

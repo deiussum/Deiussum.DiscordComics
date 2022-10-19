@@ -25,7 +25,8 @@ class XkcdBot:
             requests.post(discordHook, data={'content': altText} )
             appSettings.SetAppSetting('LAST_XKCD', src)
 
-load_dotenv()
-x = XkcdBot()
-x.postLatest()
+if __name__ == '__main__':
+    load_dotenv()
+    x = XkcdBot()
+    x.postLatest()
 

@@ -24,7 +24,8 @@ class XkcdBot:
             requests.post(discordHook, data={'content': msg} )
             appSettings.SetAppSetting('LAST_PENNY', img)
 
-load_dotenv()
-x = XkcdBot()
-x.postLatest()
+if __name__ == '__main__':
+    load_dotenv()
+    x = XkcdBot()
+    x.postLatest()
 

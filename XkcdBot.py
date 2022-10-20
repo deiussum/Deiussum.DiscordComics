@@ -38,7 +38,7 @@ class XkcdBot:
 
     def isNewComic(self, current):
         lastComic = self.appSettings.getAppSetting('LAST_XKCD')
-        return lastComic != current['img']
+        return lastComic != current['url']
 
 
 

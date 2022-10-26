@@ -4,7 +4,7 @@ import AppSettings
 from pyquery import PyQuery as pq
 from dotenv import load_dotenv
 
-class XkcdBot:
+class PennyArcadeBot:
     def __init__(self):
         self.url = 'https://www.penny-arcade.com/comic'
         self.discordHook = os.environ['PENNY_HOOK']
@@ -39,6 +39,6 @@ class XkcdBot:
 
 if __name__ == '__main__':
     load_dotenv()
-    x = XkcdBot()
+    x = PennyArcadeBot()
     x.postLatest()
 

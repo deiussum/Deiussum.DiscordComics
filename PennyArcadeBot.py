@@ -17,11 +17,11 @@ class PennyArcadeBot:
             self.postToDiscord(current)
 
     def postToDiscord(self, current):
-        msg = f"{current['title']}\r\n{current['img']}"
+        url = current['url']
 
-        requests.post(self.discordHook, data={'content': msg} )
+        requests.post(self.discordHook, data={'content': url} )
 
-        self.appSettings.setAppSetting('LAST_PENNY', current['img'])
+        self.appSettings.setAppSetting('LAST_PENNY', url)
 
     def getCurrent(self):
         result = requests.get(self.url)
@@ -29,12 +29,16 @@ class PennyArcadeBot:
 
         return {
             'title': html("meta[property='og:title']").attr['content'],
-            'img': html("meta[property='og:image']").attr['content']
+            'img': html("meta[property='og:image']").attr['content'],
+            'url': html("meta[property='og:url']").attr['content'],
         }
 
     def isNewComic(self, current):
         lastComic = self.appSettings.getAppSetting('LAST_PENNY')
-        return lastComic != current['img']
+
+        # Checking both 'url' and 'img' to catch case where an old version of the script saved 'img'.
+        # The 'img' check can be removed once the script has been deployed and run at least once.
+        return lastComic != current['url'] and lastComic != current['img']
 
 
 if __name__ == '__main__':

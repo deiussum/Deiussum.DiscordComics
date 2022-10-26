@@ -1,5 +1,5 @@
 # Deiussum.DiscordComics
-This project contains some python scripts that can be used to post the latest XKCD and/or Penny Arcade comics to a discord channel.  To use these scripts:
+This project contains some python scripts that can be used to post the latest XKCD and/or Penny Arcade comics to a discord channel.  
 
 # Quick install instructions
 

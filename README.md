@@ -35,7 +35,7 @@ If you have the git command line installed, you can simply type the following fr
 
     git clone https://github.com/deiussum/Deiussum.DiscordComics.git
 
-## Create a .env file
+## Create a .env file or create environment variables
 
 Using your favorite text editor, create a file that looks something like so:
 
@@ -43,6 +43,8 @@ Using your favorite text editor, create a file that looks something like so:
     XKCD_HOOK=<paste in the webhook URL from your xkcd webhook here>
 
 Note that you can setup a single webhook and use the same URL for both of these.  Using a separate webhook allows you to name them and give them their own profile pictures, though.
+
+You can also setup environment variables with the same names and values.  How you do this will depend on the OS you are using.
 
 ## Install python 3.x
 

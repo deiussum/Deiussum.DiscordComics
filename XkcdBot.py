@@ -20,7 +20,7 @@ class XkcdBot:
     def postToDiscord(self, current):
         url = current['url']
 
-        msg = f"{current['title']}\n||{current['altText']}||\n{current['img']}"
+        msg = f"__**{current['title']}**__\n||{current['altText']}||\n{current['img']}"
 
         requests.post(self.discordHook, data={'content': msg} )
 

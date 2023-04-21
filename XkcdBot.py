@@ -13,16 +13,30 @@ class XkcdBot:
     def postLatest(self):
         current = self.getCurrent()
 
-        if self.isNewComic(current):
-            self.postToDiscord(current)
+        #if self.isNewComic(current):
+        self.postToDiscord(current)
 
 
     def postToDiscord(self, current):
         url = current['url']
 
-        msg = f"__**{current['title']}**__\n\n||{current['altText']}||\n\n{current['img']}"
+        title = f"{current['title']}"
+        description = f"||{current['altText']}||"
+        image = { 'url': current['img']}
 
-        requests.post(self.discordHook, data={'content': msg} )
+        embed = { 'type': 'rich', 'title': title, 'description': description, 'color': '0x00FFFF', 'image': image }
+        embeds = [embed]
+
+
+        #msg = { 'content': f"__**{current['title']}**__\n\n||{current['altText']}||\n\n{current['img']}" }
+
+        msg = { 'embeds': embeds }
+        print(msg)
+
+        response = requests.post(self.discordHook, msg)
+        #response = requests.post(self.discordHook, data={ 'content': msg })
+        print(response.reason)
+        print(response.text)
 
         self.appSettings.setAppSetting('LAST_XKCD', url)
 

@@ -44,12 +44,15 @@ class XkcdBot:
     def getCurrent(self):
         result = requests.get(self.url)
         html = pq(result.text)
+        img = f"https:{html('#comic img').attr['src']}"
+        url = html("meta[property='og:url']").attr['content']
 
         return {
             'title':  html('#ctitle').html(),
-            'img':  f"https:{html('#comic img').attr['src']}",
+            'img':  img,
             'altText': f"Alt text: {html('#comic img').attr['title']}",
-            'url': html("meta[property='og:url']").attr['content'],
+            # Sometimes the metadata tag is empty for the url.  Fall back to the img tag when that happens
+            'url': url or img 
         }
 
     def isNewComic(self, current):

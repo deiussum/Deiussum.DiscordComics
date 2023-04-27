@@ -1,0 +1,30 @@
+# NOTE: This uses an environment variable to hold the discordWebHook URL
+# To set this up, open up the settings.json file of VS Code and add an 
+# entry for "rest-client.environmentVariables", then choose the environment
+# from the dropdown menu in the bottom right corner of the editor window. 
+
+
+# Send basic message
+
+POST {{discordWebHook}}
+Content-Type: application/json
+
+{
+    "content": "Hello, World!"
+}
+
+
+# Send message with embed
+POST {{discordWebHook}}
+Content-Type: application/json
+
+{
+    "embeds": [
+        {
+            "description": "# [Hello, Embed!](https://xkcd.com/) \n ||This is an embedded message.||",
+            "image": {
+                "url": "https://imgs.xkcd.com/comics/definition_of_e.png"
+            }
+        }
+    ]
+}

@@ -20,9 +20,29 @@ class XkcdBot:
     def postToDiscord(self, current):
         url = current['url']
 
-        msg = f"__**{current['title']}**__\n\n||{current['altText']}||\n\n{current['img']}"
+        titleLink = f"[{current['title']}]({url})"
+        description = f"## {titleLink} \\n||{current['altText']}||"
+        imageUrl = current['img']
 
-        requests.post(self.discordHook, data={'content': msg} )
+        msg = f'''
+         {{
+            "content": "{url}",
+            "embeds": [
+                {{ 
+                    "description": "{description}", 
+                    "image": {{ 
+                        "url": "{imageUrl}" 
+                    }} 
+                }}
+            ]
+        }}
+        '''
+
+        #print(msg)
+
+        response = requests.post(self.discordHook, msg, headers={'Content-Type': 'application/json'})
+        #print(response.reason)
+        #print(response.text)
 
         self.appSettings.setAppSetting('LAST_XKCD', url)
 

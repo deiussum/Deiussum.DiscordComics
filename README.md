@@ -46,6 +46,13 @@ Note that you can setup a single webhook and use the same URL for both of these.
 
 You can also setup environment variables with the same names and values.  How you do this will depend on the OS you are using.
 
+If you want to post the same comic to multiple endpoints, you can instead name the environment variables with an index number on the end.  These must be sequential
+and start with 1.  For example, if you wanted to post Xkcd to endpoints on 2 different discord servers, it might look something like so:
+
+    XKCD_HOOK1=https://webhook.url/1
+    XKCD_HOOK2=https://webhook.url/2
+
+
 ## Install python 3.x
 
 How you install Python depends on your operating system.  Visit [Python.org](https://www.python.org) for instructions.

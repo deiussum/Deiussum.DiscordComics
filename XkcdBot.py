@@ -14,8 +14,8 @@ class XkcdBot:
         current = self.getCurrent()
 
         for key, discordHook in self.discordHooks.items():
-            if self.isNewComic(current, key):
-                self.postToDiscord(current, discordHook, key)
+            #if self.isNewComic(current, key):
+            self.postToDiscord(current, discordHook, key)
 
 
     def postToDiscord(self, current, discordHook, hookIndex):
@@ -39,7 +39,7 @@ class XkcdBot:
         }}
         '''
 
-        #print(msg)
+        print(msg)
 
         response = requests.post(discordHook, msg, headers={'Content-Type': 'application/json'})
         #print(response.reason)
@@ -57,7 +57,7 @@ class XkcdBot:
         return {
             'title':  html('#ctitle').html(),
             'img':  img,
-            'altText': f"Alt text: {html('#comic img').attr['title']}",
+            'altText': f"Alt text: {html('#comic img').attr['title']}".replace('"', '\\"'),
             # Sometimes the metadata tag is empty for the url.  Fall back to the img tag when that happens
             'url': url or img 
         }

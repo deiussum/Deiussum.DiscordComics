@@ -4,7 +4,7 @@
 # from the dropdown menu in the bottom right corner of the editor window. 
 
 
-# Send basic message
+### Send basic message
 
 POST {{discordWebHook}}
 Content-Type: application/json
@@ -14,14 +14,16 @@ Content-Type: application/json
 }
 
 
-# Send message with embed
+### Send message with embed
+
 POST {{discordWebHook}}
 Content-Type: application/json
 
 {
+    "content": "[Link Test](https://xkcd.com)",
     "embeds": [
         {
-            "description": "# [Hello, Embed!](https://xkcd.com/) \n ||This is an embedded message.||",
+            "description": "||This is an embedded message.||",
             "image": {
                 "url": "https://imgs.xkcd.com/comics/definition_of_e.png"
             }

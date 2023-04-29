@@ -22,12 +22,12 @@ class XkcdBot:
         url = current['url']
 
         titleLink = f"[{current['title']}]({url})"
-        description = f"## {titleLink} \\n||{current['altText']}||"
+        description = f"||{current['altText']}||"
         imageUrl = current['img']
 
         msg = f'''
          {{
-            "content": "{url}",
+            "content": "{titleLink}",
             "embeds": [
                 {{ 
                     "description": "{description}", 
@@ -39,7 +39,7 @@ class XkcdBot:
         }}
         '''
 
-        print(msg)
+        #print(msg)
 
         response = requests.post(discordHook, msg, headers={'Content-Type': 'application/json'})
         #print(response.reason)

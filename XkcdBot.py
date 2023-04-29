@@ -14,8 +14,8 @@ class XkcdBot:
         current = self.getCurrent()
 
         for key, discordHook in self.discordHooks.items():
-            #if self.isNewComic(current, key):
-            self.postToDiscord(current, discordHook, key)
+            if self.isNewComic(current, key):
+                self.postToDiscord(current, discordHook, key)
 
 
     def postToDiscord(self, current, discordHook, hookIndex):

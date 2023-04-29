@@ -55,9 +55,9 @@ class XkcdBot:
         url = html("meta[property='og:url']").attr['content']
 
         return {
-            'title':  html('#ctitle').html(),
+            'title':  html('#ctitle').html().replace('"', '\\"'),
             'img':  img,
-            'altText': f"Alt text: {html('#comic img').attr['title']}".replace('"', '\\"'),
+            'altText': html('#comic img').attr['title'].replace('"', '\\"'),
             # Sometimes the metadata tag is empty for the url.  Fall back to the img tag when that happens
             'url': url or img 
         }

@@ -1,5 +1,6 @@
 import requests
 import AppSettings
+from ComicLogger import ComicLogger as log
 from Environment import Environment as env 
 from pyquery import PyQuery as pq
 from dotenv import load_dotenv
@@ -11,10 +12,12 @@ class XkcdBot:
         self.discordHooks = env.getEnvVariableAsDictionary('XKCD_HOOK')
 
     def postLatest(self):
+        log.info('XkcdBot', 'Checking for new Xkcd')
         current = self.getCurrent()
 
         for key, discordHook in self.discordHooks.items():
             if self.isNewComic(current, key):
+                log.info('XkcdBot', 'New Xkcd comic found')
                 self.postToDiscord(current, discordHook, key)
 
 
@@ -69,6 +72,7 @@ class XkcdBot:
 
 
 if __name__ == '__main__':
+    log.initialize()
     load_dotenv()
     x = XkcdBot()
     x.postLatest()

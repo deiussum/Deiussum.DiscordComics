@@ -65,6 +65,14 @@ You can install the required python modules by using the following command-line 
     python -m pip install pyquery
     python -m pip install python-dotenv
 
+Arch Linux note:
+
+If you are using Arch linux and have installed Python using pacman, you may need pacman to install these modules as well using the following commands.
+
+    sudo pacman -S python-requests
+    sudo pacman -S python-pyquery
+    sudo pacman -S python-dotenv
+
 ## Setup a scheduler
 
 Setting up a scheduler depends on what operating system you are using.  Each comic can be scheduled indidually, or you can create a script that runs them all.  Currently, the comics that can be posted include:

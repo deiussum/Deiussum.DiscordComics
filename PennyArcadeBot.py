@@ -1,6 +1,7 @@
 import os
 import requests
 import AppSettings
+from ComicLogger import ComicLogger as log
 from Environment import Environment as env 
 from pyquery import PyQuery as pq
 from dotenv import load_dotenv
@@ -12,10 +13,12 @@ class PennyArcadeBot:
         self.appSettings = AppSettings.AppSettings()
 
     def postLatest(self):
+        log.info('PennyArcadeBot', 'Checking for new Penny Arcade')
         current = self.getCurrent()
 
         for key, discordHook in self.discordHooks.items():
             if self.isNewComic(current, key):
+                log.info('PennyArcadeBot', 'New Penny Arcade fond')
                 self.postToDiscord(current, discordHook, key)
 
     def postToDiscord(self, current, discordHook, hookIndex):
@@ -42,6 +45,7 @@ class PennyArcadeBot:
 
 
 if __name__ == '__main__':
+    log.initialize()
     load_dotenv()
     x = PennyArcadeBot()
     x.postLatest()

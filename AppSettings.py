@@ -26,7 +26,7 @@ class AppSettings:
             split = line.split('=',1)
             if len(split) < 2:
                 continue
-            
+
             key = split[0]
             value = split[1].strip()
             settings[key]=value
@@ -48,6 +48,6 @@ class AppSettings:
 
 if __name__ == '__main__':
     settings = AppSettings()
-    value = settings.GetAppSetting('Test')
+    value = settings.getAppSetting('Test')
     print(value)
-    settings.SetAppSetting('Test', 'Value')
+    settings.setAppSetting('Test', 'Value')

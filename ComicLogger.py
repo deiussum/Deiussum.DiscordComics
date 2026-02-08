@@ -1,5 +1,6 @@
 import logging
 
+
 class ComicLogger(object):
     @classmethod
     def initialize(cls):
